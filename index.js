@@ -3,24 +3,34 @@ var fetch = window.fetch;
 var addBtn = document.getElementById('add');
 
 addBtn.onclick = function () {
-  var newDiv = document.createElement('div');
+  window.newDiv = document.createElement('div');
   newDiv.classList.add('row');
-  newDiv.innerHTML = '<hr><input class="urlinput" type="url" placeholder="URL to json" /> <button class="btn btn-default getfiles">Get JSON file </button';
+  newDiv.innerHTML = '<hr><input class="urlinput" type="file" placeholder="URL to json" />'; //'<button class="btn btn-default getfiles">Get JSON file </button'
 
   var container = document.querySelector('.container');
   container.appendChild(newDiv);
-  var getFiles = newDiv.querySelector('.getfiles');
+  // var getFiles = newDiv.querySelector('.getfiles');
   var input = newDiv.querySelector('.urlinput');
-
-  getFiles.onclick = function () {
-    fetch(input.value).then(getJson).then(function (response) {
-      writeToTable(response, newDiv);
-    });
-  };
+  input.addEventListener("change", handleFiles, false);
+  // getFiles.onclick = function () {
+  //
+  //
+  //   // fetch(input.value).then(getJson).then(function (response) {
+  //   //   writeToTable(response, newDiv);
+  //   // });
+  // };
 
 };
 
+function handleFiles() {
+  var fileList = this.files; /* now you can work with the file list */
+  var reader = new FileReader();
+  reader.onloadend = function (progress, buff) {
 
+    writeToTable(JSON.parse(this.result), window.newDiv);
+  };
+  reader.readAsText(this.files[0]);
+}
 
 function getJson (response) {
   return response.json();
