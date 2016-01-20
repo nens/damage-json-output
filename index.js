@@ -39,7 +39,8 @@ function getJson (response) {
 function writeToTable(response, destination) {
   var table = document.createElement('table');
   destination.appendChild(table);
-  table.classList.add('table table-striped');
+  table.classList.add('table');
+  table.classList.add('table-striped');
   var thead = document.createElement('thead');
   var tbody = document.createElement('tbody');
   table.appendChild(thead);
