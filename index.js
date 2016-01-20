@@ -37,6 +37,9 @@ function getJson (response) {
 }
 
 function writeToTable(response, destination) {
+  var h3 = document.createElement('h3');
+  h3.innerHTML = 'Totale schade: ' + response.total_damage.toFixed(2);
+  destination.appendChild(h3);
   var table = document.createElement('table');
   destination.appendChild(table);
   table.classList.add('table');
@@ -46,17 +49,17 @@ function writeToTable(response, destination) {
   table.appendChild(thead);
   table.appendChild(tbody);
   var trH = document.createElement('tr');
+  trH.innerHTML = '<th>#</th><th>Schade Type</th><th>Schade Bedrag</th>'
+
   thead.appendChild(trH);
-  var tdDT = document.createElement('td');
-  tdDT.innerHTML = 'Schade Type';
-  trH.appendChild(tdDT);
-  var tdD = document.createElement('td');
-  tdD.innerHTML = 'Schade bedrag';
-  trH.appendChild(tdD);
 
   Object.keys(response.damage).forEach(function (key) {
     var tr = document.createElement('tr');
     tbody.appendChild(tr);
+    var tdN = document.createElement('td');
+    tdN.innerHTML = key;
+    tr.appendChild(tdN);
+
     var td = document.createElement('td');
     td.innerHTML = response.damage_table[key];
     tr.appendChild(td);
